@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FumoHelper</title>
+    <meta
+        name="description"
+        content="FumoHelper is an unofficial Discord app for FUMO with player stats, raid stats, activity tracking, guild contribution leaderboards, war counts, and guild raid logs."
+    />
+    <style>
+        :root {
+            --bg: #07111f;
+            --panel: rgba(13, 23, 39, 0.9);
+            --panel-strong: rgba(17, 29, 49, 0.96);
+            --line: rgba(154, 198, 255, 0.16);
+            --line-strong: rgba(154, 198, 255, 0.34);
+            --text: #ebf4ff;
+            --muted: #97aeca;
+            --accent: #85e3ff;
+            --accent-2: #94a7ff;
+            --accent-3: #9cffd4;
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+            --hero-glow: radial-gradient(circle at 20% 20%, rgba(133, 227, 255, 0.18), transparent 28%);
+            --hero-glow-2: radial-gradient(circle at 78% 16%, rgba(148, 167, 255, 0.15), transparent 24%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                var(--hero-glow),
+                var(--hero-glow-2),
+                linear-gradient(180deg, #08111f 0%, #040912 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.55;
+            background-image:
+                radial-gradient(circle at 12% 30%, rgba(255,255,255,0.09) 0 1px, transparent 2px),
+                radial-gradient(circle at 80% 18%, rgba(255,255,255,0.06) 0 1px, transparent 2px),
+                radial-gradient(circle at 65% 72%, rgba(255,255,255,0.05) 0 1px, transparent 2px);
+            background-size: 220px 220px, 280px 280px, 340px 340px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .wrap {
+            width: min(1180px, calc(100vw - 32px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(14px);
+            background: rgba(5, 10, 18, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .topbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            background:
+                radial-gradient(circle at 30% 30%, #d7fbff 0 12%, transparent 13%),
+                radial-gradient(circle at 60% 60%, #7edfff 0 18%, #1a3e78 50%, #091426 100%);
+            box-shadow: 0 0 24px rgba(126, 223, 255, 0.34);
+        }
+
+        .brand-name {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 22px;
+            letter-spacing: 0.03em;
+        }
+
+        .nav {
+            display: flex;
+            gap: 16px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav a:hover {
+            color: var(--text);
+        }
+
+        .hero {
+            padding: 72px 0 44px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .hero-copy,
+        .hero-card,
+        .feature-card,
+        .info-card,
+        .footer-card {
+            background: linear-gradient(180deg, var(--panel) 0%, var(--panel-strong) 100%);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-copy {
+            padding: 34px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(133, 227, 255, 0.08);
+            border: 1px solid rgba(133, 227, 255, 0.16);
+        }
+
+        h1 {
+            margin: 18px 0 16px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(44px, 7vw, 78px);
+            line-height: 0.96;
+            letter-spacing: -0.03em;
+        }
+
+        .lede {
+            margin: 0;
+            max-width: 60ch;
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 18px;
+            border-radius: 14px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            transition: transform 140ms ease, opacity 140ms ease, border-color 140ms ease;
+        }
+
+        .button.primary {
+            color: #03131f;
+            background: linear-gradient(135deg, var(--accent), #e0fbff);
+            box-shadow: 0 12px 28px rgba(124, 218, 255, 0.2);
+        }
+
+        .button.secondary {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .pill {
+            padding: 10px 12px;
+            border-radius: 14px;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 13px;
+        }
+
+        .hero-card {
+            padding: 22px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent 24%);
+        }
+
+        .preview-shell {
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #111827;
+        }
+
+        .preview-banner {
+            height: 208px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 14% 34%, rgba(170, 222, 255, 0.62) 0 1px, transparent 2px),
+                radial-gradient(circle at 82% 20%, rgba(170, 222, 255, 0.68) 0 1px, transparent 2px),
+                radial-gradient(circle at 56% 54%, rgba(255,255,255,0.75) 0 1px, transparent 2px),
+                linear-gradient(180deg, rgba(10, 21, 51, 0.25), rgba(5, 9, 18, 0.14)),
+                linear-gradient(135deg, #071336 0%, #0b1459 42%, #060c23 100%);
+            background-size: 180px 180px, 240px 240px, 300px 300px, auto, auto;
+        }
+
+        .preview-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 62%, rgba(114, 222, 255, 0.22), transparent 22%),
+                radial-gradient(circle at 68% 72%, rgba(159, 163, 255, 0.18), transparent 24%);
+        }
+
+        .preview-avatar {
+            width: 108px;
+            height: 108px;
+            margin-left: 26px;
+            margin-top: -54px;
+            border-radius: 999px;
+            position: relative;
+            background:
+                radial-gradient(circle at 42% 34%, rgba(214, 245, 255, 0.95) 0 10%, transparent 11%),
+                linear-gradient(180deg, #2dbeea 0%, #0f3158 100%);
+            border: 6px solid #111827;
+            box-shadow: 0 0 0 2px rgba(123, 215, 255, 0.6);
+        }
+
+        .preview-avatar::after {
+            content: "";
+            position: absolute;
+            inset: 10px;
+            border-radius: 999px;
+            background:
+                radial-gradient(circle at 42% 36%, #d5fbff 0 6%, transparent 7%),
+                linear-gradient(180deg, #86ebff 0%, #143d69 100%);
+        }
+
+        .preview-body {
+            padding: 18px 24px 26px;
+        }
+
+        .preview-name {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 31px;
+            margin: 2px 0 4px;
+        }
+
+        .preview-note {
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        .section {
+            padding: 18px 0 0;
+        }
+
+        .section-title {
+            margin: 0 0 18px;
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card,
+        .info-card,
+        .footer-card {
+            padding: 22px;
+        }
+
+        .feature-card h3,
+        .info-card h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p,
+        .info-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .command-list {
+            margin-top: 14px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .command {
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 13px;
+            color: #d8ebff;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .list {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .footer {
+            padding: 16px 0 54px;
+        }
+
+        .footer-card {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .fineprint {
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 58ch;
+        }
+
+        .link-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 980px) {
+            .hero-grid,
+            .info-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true"></div>
+                <div class="brand-name">FumoHelper</div>
+            </div>
+            <nav class="nav">
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="#links">Links</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="hero">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <div class="eyebrow">Public Project Page</div>
+                    <h1>FumoHelper</h1>
+                    <p class="lede">
+                        An unofficial Discord app for <strong>FUMO</strong>, built around
+                        practical Wynncraft tracking tools for player lookups, raid history,
+                        guild activity, and contribution monitoring.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button primary" href="https://discord.com/developers/applications" target="_blank" rel="noreferrer">
+                            Discord App
+                        </a>
+                        <a class="button secondary" href="https://github.com/KiraDiamond/Fumo" target="_blank" rel="noreferrer">
+                            Private Repo Link
+                        </a>
+                    </div>
+
+                    <div class="hero-meta">
+                        <div class="pill">Not an official guild app</div>
+                        <div class="pill">Public-facing page only</div>
+                        <div class="pill">Source code is private</div>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div class="preview-shell">
+                        <div class="preview-banner"></div>
+                        <div class="preview-avatar"></div>
+                        <div class="preview-body">
+                            <div class="preview-name">FumoHelper</div>
+                            <p class="preview-note">
+                                Utility-first Discord tooling for FUMO, focused on readable
+                                stats, recent raid activity, and guild tracking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <h2 class="section-title">Features</h2>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <h3>Player and Raid Commands</h3>
+                    <p>
+                        Quick stat lookups for individual players, raid progress, and
+                        account snapshots without needing to dig through raw API output.
+                    </p>
+                    <div class="command-list">
+                        <div class="command">/player</div>
+                        <div class="command">/rstats</div>
+                        <div class="command">/activity</div>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <h3>Guild Tracking</h3>
+                    <p>
+                        Contribution tracking, guild raid history, guild action logs, and
+                        war-focused views built for day-to-day monitoring.
+                    </p>
+                    <div class="command-list">
+                        <div class="command">/gxp</div>
+                        <div class="command">/graids</div>
+                        <div class="command">/guild_action</div>
+                        <div class="command">/warcount</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <h2 class="section-title">About</h2>
+            <div class="info-grid">
+                <article class="info-card">
+                    <h3>Project Scope</h3>
+                    <p>
+                        FumoHelper is a utility project for FUMO. This page exists so people
+                        can see what the bot is and what it does without exposing the private
+                        codebase behind it.
+                    </p>
+                    <ul class="list">
+                        <li>Player stats</li>
+                        <li>Raid stats</li>
+                        <li>Activity tracking</li>
+                        <li>Guild contribution leaderboards</li>
+                        <li>War counts</li>
+                        <li>Guild raid logs</li>
+                    </ul>
+                </article>
+
+                <article class="info-card">
+                    <h3>Status</h3>
+                    <p>
+                        This is an unofficial Discord app for FUMO. It is not an official
+                        guild app, and this public repository is only intended to present the
+                        project at a high level.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <footer class="footer" id="links">
+            <div class="footer-card">
+                <div class="fineprint">
+                    Public repository for project information only. Operational code,
+                    deployment details, and internal bot source remain private.
+                </div>
+                <div class="link-stack">
+                    <a class="button primary" href="https://github.com/KiraDiamond/Fumo" target="_blank" rel="noreferrer">
+                        GitHub
+                    </a>
+                    <a class="button secondary" href="https://discord.com/developers/applications" target="_blank" rel="noreferrer">
+                        Discord App Page
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
