@@ -9,6 +9,16 @@ and guild raid logs.
 This repository is public so people can see what the project is.
 It does **not** contain the actual bot source code.
 
+## Tracking Scope
+
+Some commands depend on the bot's internal tracker.
+
+Those tracker-based commands are limited to tracked guild members.
+
+That means:
+- general lookup commands can still show public player or guild information
+- tracker-based commands may return limited or empty results for players outside the tracked guild
+
 ## Included Here
 
 - Project overview
@@ -64,6 +74,9 @@ Includes:
 - Activity summary card
 - Recent raid/activity context where available
 
+Tracking note:
+- This command depends on tracked data and is mainly intended for tracked guild members
+
 ### `commands/contribution_leaderboard.py`
 
 **Command:** `/gxp`
@@ -74,6 +87,9 @@ Modes:
 - Recent contribution leaderboard
 - All-time contribution leaderboard
 
+Tracking note:
+- This command is based on tracked guild contribution data
+
 ### `commands/warcount.py`
 
 **Command:** `/warcount`
@@ -83,6 +99,9 @@ Shows tracked war totals for a guild member over a selected timeframe.
 Useful for:
 - Checking recent war participation
 - Comparing tracked war counts between members
+
+Tracking note:
+- This command depends on tracked guild-member data
 
 ### `commands/graids.py`
 
@@ -99,6 +118,9 @@ What they do:
 - `/graids_recent` shows recently detected guild raids across the guild
 - `/graids_total` shows a raider leaderboard by tracked raid count
 - `/aspect_log` shows tracked owed aspects based on raid participation
+
+Tracking note:
+- These commands only reflect raids detected for tracked guild members
 
 ### `commands/guild.py`
 
@@ -124,6 +146,9 @@ Includes:
 - Demotions
 - Guild level-ups
 
+Tracking note:
+- This command is built from the bot's tracked guild event history
+
 ### `commands/xpcon.py`
 
 **Command:** `/xpcon`
@@ -133,6 +158,9 @@ Admin-facing contribution lookup command.
 Used for:
 - Looking up one player’s tracked contribution totals
 - Viewing a contribution ranking list from tracked data
+
+Tracking note:
+- This command depends on tracked guild-member contribution data
 
 ### `commands/tracker.py`
 
@@ -156,3 +184,5 @@ What they do:
 - Guild raid logs
 - Guild action history
 - Tracker/debug tools for maintenance
+
+Tracker-based features are limited to tracked guild members.

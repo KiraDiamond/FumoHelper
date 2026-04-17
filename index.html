@@ -229,10 +229,15 @@
                     This repository is the public-facing page for the project.
                     The bot source code is not public.
                 </p>
+                <p>
+                    Some features depend on tracked guild-member data, so tracker-based
+                    commands are limited to players in the tracked guild.
+                </p>
                 <div class="badge-row">
                     <div class="badge">Unofficial Discord app for FUMO</div>
                     <div class="badge">Not an official guild app</div>
                     <div class="badge">Source code not public</div>
+                    <div class="badge">Tracker-based features need tracked guild members</div>
                 </div>
             </div>
         </section>
@@ -260,6 +265,10 @@
                         <strong>Public page only:</strong> this repo exists so people can
                         see what the project is. The bot source code itself is not public.
                     </div>
+                    <div class="note" style="margin-top: 12px;">
+                        <strong>Tracking limitation:</strong> commands that rely on stored
+                        tracking data only work properly for tracked guild members.
+                    </div>
                 </div>
             </section>
         </div>
@@ -279,11 +288,11 @@
                         </div>
                         <div class="command">
                             <strong>/activity</strong>
-                            <span>Shows tracked activity over time, including recent stat gains and playtime.</span>
+                            <span>Shows tracked activity over time, including recent stat gains and playtime. This is a tracker-based command.</span>
                         </div>
                         <div class="command">
                             <strong>/gxp</strong>
-                            <span>Shows recent or all-time guild contribution leaderboard rankings.</span>
+                            <span>Shows recent or all-time guild contribution leaderboard rankings from tracked guild-member data.</span>
                         </div>
                         <div class="command">
                             <strong>/warcount</strong>
@@ -294,11 +303,11 @@
                     <div class="command-list">
                         <div class="command">
                             <strong>/graids</strong>
-                            <span>Shows detected guild raid history for one player.</span>
+                            <span>Shows detected guild raid history for one player from tracked guild-member data.</span>
                         </div>
                         <div class="command">
                             <strong>/graids_recent</strong>
-                            <span>Lists recently detected guild raids across the guild.</span>
+                            <span>Lists recently detected guild raids across tracked guild members.</span>
                         </div>
                         <div class="command">
                             <strong>/graids_total</strong>
@@ -336,7 +345,7 @@
         </section>
 
         <footer>
-            FumoHelper public page. The bot source code is not published here.
+            FumoHelper public page. The bot source code is not published here. Tracker-based features are limited to tracked guild members.
         </footer>
     </main>
 </body>
