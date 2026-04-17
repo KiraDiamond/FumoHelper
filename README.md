@@ -1,25 +1,27 @@
 # FumoHelper
 
-Public landing page for **FumoHelper**, an unofficial Discord app for **FUMO**.
+Public information page for **FumoHelper**.
 
-This repository is for the public-facing page only.
+FumoHelper is an unofficial Discord app for **FUMO**. It provides player stat lookups,
+raid stat views, activity tracking, guild contribution leaderboards, war counts,
+and guild raid logs.
 
-## What It Includes
+This repository is public so people can see what the project is.
+It does **not** contain the actual bot source code.
 
-- Public project description
-- Feature overview
-- Static landing page for GitHub Pages
+## Included Here
 
-## What It Does Not Include
+- Project overview
+- Feature list
+- Command list with explanations
+- Public landing page
+
+## Not Included Here
 
 - Bot source code
-- Private infrastructure
-- Secrets or runtime data
 
 ## Notes
 
-FumoHelper is an unofficial Discord app for FUMO and is **not** an official guild app.
-
-If you publish this with GitHub Pages, the main site file is:
-
-- `index.html`
+- FumoHelper is **not** an official guild app.
+- The source for the running bot is not public.
+- The site entry point is `index.html`.
