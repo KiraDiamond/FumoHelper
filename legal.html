@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FumoHelper — Legal</title>
+    <meta name="description" content="Terms of Service and Privacy Policy for FumoHelper." />
+    <style>
+        :root {
+            --bg: #0c1118;
+            --panel: #141b24;
+            --panel-soft: #1a2330;
+            --line: #263244;
+            --text: #eef3f9;
+            --muted: #a5b2c3;
+            --accent: #82d7ff;
+            --link: #9ec8ff;
+            --good: #9ce2b0;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .wrap {
+            width: min(980px, calc(100vw - 32px));
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 1px solid var(--line);
+            background: #10161f;
+        }
+
+        .top {
+            padding: 18px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .name { font-size: 28px; font-weight: 700; letter-spacing: 0.01em; }
+        .sub { color: var(--muted); font-size: 14px; }
+
+        /* Tab nav */
+        .tab-bar {
+            display: flex;
+            gap: 6px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tab-btn {
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--muted);
+            font-family: Georgia, serif;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            cursor: pointer;
+            transition: color 0.15s, background 0.15s, border-color 0.15s;
+        }
+
+        .tab-btn:hover { color: var(--text); border-color: #3a4f68; }
+        .tab-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(130,215,255,0.06); }
+
+        main { padding: 28px 0 56px; }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        section {
+            margin-bottom: 18px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .section-head {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--line);
+            background: var(--panel-soft);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+        }
+
+        .section-body { padding: 18px; }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.08;
+        }
+
+        h2 { margin: 0 0 10px; font-size: 20px; }
+
+        p { margin: 0 0 12px; color: var(--muted); }
+        p:last-child { margin-bottom: 0; }
+
+        .lead { font-size: 17px; color: #dbe6f2; }
+
+        ul { margin: 0; padding-left: 20px; color: var(--muted); }
+        li + li { margin-top: 6px; }
+
+        .note {
+            padding: 14px;
+            border-radius: 12px;
+            background: #101821;
+            border: 1px solid var(--line);
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .note:last-child { margin-bottom: 0; }
+        .note strong { color: var(--good); }
+
+        footer {
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="wrap top">
+        <div>
+            <div class="name">FumoHelper</div>
+            <div class="sub">Legal</div>
+        </div>
+        <div class="sub"><a href="index.html">← Back to project page</a></div>
+    </div>
+</header>
+
+<main class="wrap">
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="show('tos', this)">Terms of Service</button>
+        <button class="tab-btn" onclick="show('pp', this)">Privacy Policy</button>
+    </div>
+
+    <!-- TERMS OF SERVICE -->
+    <div class="page active" id="tos">
+        <br/>
+        <section>
+            <div class="section-head">Overview</div>
+            <div class="section-body">
+                <h1>Terms of Service</h1>
+                <p class="lead">Last updated: April 2025</p>
+                <p>By using FumoHelper in any Discord server, you agree to the following terms. These apply to all users who interact with the bot.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">About FumoHelper</div>
+            <div class="section-body">
+                <p>FumoHelper is an unofficial Discord bot that provides Wynncraft player and guild statistics for the in-game guild FUMO. It retrieves publicly available data from Wynncraft's API and presents it within Discord.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">Acceptable Use</div>
+            <div class="section-body">
+                <p>You agree to use FumoHelper only for its intended purpose. You must not:</p>
+                <ul>
+                    <li>Spam, abuse, or attempt to overload the bot with requests</li>
+                    <li>Use the bot to harass or target other users</li>
+                    <li>Attempt to exploit or reverse-engineer the bot</li>
+                    <li>Use the bot in violation of <a href="https://discord.com/terms" target="_blank" rel="noreferrer">Discord's Terms of Service</a> or <a href="https://wynncraft.com/tos" target="_blank" rel="noreferrer">Wynncraft's Terms of Service</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">Third-Party Data</div>
+            <div class="section-body">
+                <p>FumoHelper retrieves data from Wynncraft's public API. We have no control over the accuracy or availability of that data. Wynncraft's own terms govern their API and services.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">Availability & Liability</div>
+            <div class="section-body">
+                <div class="note">
+                    <strong>Availability:</strong> FumoHelper is provided as-is with no guarantee of uptime. The bot may be updated or discontinued at any time without notice.
+                </div>
+                <div class="note">
+                    <strong>Liability:</strong> FumoHelper and its developers are not responsible for any damages or losses arising from use of the bot. All data is for informational purposes only.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">Changes & Contact</div>
+            <div class="section-body">
+                <p>These terms may be updated at any time. Continued use of FumoHelper constitutes acceptance of any revised terms.</p>
+                <p>For questions, reach out via the FUMO guild Discord server.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- PRIVACY POLICY -->
+    <div class="page" id="pp">
+        <br/>
+        <section>
+            <div class="section-head">Overview</div>
+            <div class="section-body">
+                <h1>Privacy Policy</h1>
+                <p class="lead">Last updated: April 2025</p>
+                <p>This policy explains what data FumoHelper does and does not collect.</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">No Data Collection</div>
+            <div class="section-body">
+                <p>FumoHelper does <strong>not</strong> collect, store, or process any personal data. The bot does not retain:</p>
+                <ul>
+                    <li>Discord usernames, user IDs, or account information</li>
+                    <li>Message content or command history</li>
+                    <li>Server or channel information</li>
+                    <li>IP addresses or device data</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">Third-Party Services</div>
+            <div class="section-body">
+                <div class="note">
+                    <strong>Wynncraft API:</strong> FumoHelper fetches publicly available stats in real time. This data is displayed directly and never stored. Wynncraft's own <a href="https://wynncraft.com/tos" target="_blank" rel="noreferrer">Terms of Service</a> govern any data on their end.
+                </div>
+                <div class="note">
+                    <strong>Discord:</strong> FumoHelper runs within Discord, which has its own <a href="https://discord.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>. We have no control over Discord's data handling.
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">Changes & Contact</div>
+            <div class="section-body">
+                <p>If FumoHelper's data practices change, this policy will be updated. For questions, reach out via the FUMO guild Discord server.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        FumoHelper · Unofficial Discord app for FUMO · <a href="index.html">Project page</a>
+    </footer>
+</main>
+
+<script>
+    function show(id, btn) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
